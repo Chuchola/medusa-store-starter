@@ -24,9 +24,9 @@ async function main() {
 
   console.log("\nCopying .env templates...")
   await copyFile(resolve(__dirname, "server/.env.template"), resolve(__dirname, "server/.env"))
-  console.log("  server/.env.template -> server/.env")
+  console.log("server/.env.template -> server/.env")
   await copyFile(resolve(__dirname, "storefront/.env.template"), resolve(__dirname, "storefront/.env.local"))
-  console.log("  storefront/.env.template -> storefront/.env.local")
+  console.log("storefront/.env.template -> storefront/.env.local")
 
   const databaseUrl = `postgres://${username}:${password}@${host}/${dbName}`
   const newLine = `DATABASE_URL=${databaseUrl}`
