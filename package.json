@@ -6,8 +6,8 @@
     "concurrently": "^9.0.0"
   },
   "scripts": {
-    "configure": "yarn run preconfigure && node ./configure.js",
-    "preconfigure": "yarn --cwd server install && yarn --cwd storefront install",
+    "configure": "yarn install:all && node ./configure.js",
+    "install:all": "yarn --cwd server install && yarn --cwd storefront install",
     "dev": "concurrently -n server,storefront -c blue,green \"yarn --cwd server dev\" \"yarn --cwd storefront dev\"",
     "dev:server": "yarn --cwd server dev",
     "dev:storefront": "yarn --cwd storefront dev",

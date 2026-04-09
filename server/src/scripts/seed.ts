@@ -1,5 +1,3 @@
-import { readFileSync, writeFileSync } from "fs";
-import { resolve } from "path";
 import { CreateInventoryLevelInput, ExecArgs } from "@medusajs/framework/types";
 import {
   ContainerRegistrationKeys,
@@ -922,17 +920,34 @@ export default async function seedDemoData({ container }: ExecArgs) {
 
   logger.info("Finished seeding inventory levels data.");
 
-  logger.info("Writing publishable API key to storefront .env.local...");
-  const envLocalPath = resolve(__dirname, "../../../storefront/.env.local");
-  const newLine = `NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY=${publishableApiKey.token}`;
-  let envContent = readFileSync(envLocalPath, "utf-8");
-  if (/^NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY=.*$/m.test(envContent)) {
-    envContent = envContent.replace(/^NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY=.*$/m, newLine);
-  } else {
-    envContent = envContent.endsWith("\n")
-      ? envContent + newLine + "\n"
-      : envContent + "\n" + newLine + "\n";
-  }
-  writeFileSync(envLocalPath, envContent, "utf-8");
-  logger.info(`NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY updated in storefront/.env.local`);
+  logHighlightBox(logger, [
+    `\x1b[1;32m\x1b[1mPUBLISHABLE API KEY:\x1b[0m`,
+    "",
+    `\x1b[1;36m${publishableApiKey.token}\x1b[0m`,
+    "",
+    "Add to storefront env file:",
+    `\x1b[1;36mNEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY=${publishableApiKey.token}\x1b[0m`,
+  ]);
+}
+
+function logHighlightBox(
+  logger: { info: (msg: string) => void },
+  rows: string[]
+) {
+  const y = "\x1b[1;33m";
+  const rst = "\x1b[0m";
+  const strip = (s: string) => s.replace(/\x1b\[[0-9;]*m/g, "");
+  const W = Math.max(...rows.map((s) => strip(s).length)) + 2;
+  const line = "═".repeat(W);
+  const row = (text: string) => {
+    const pad = W - 1 - strip(text).length;
+    return `${y}║${rst} ${text}${" ".repeat(pad)}${y}║${rst}`;
+  };
+  const empty = `${y}║${" ".repeat(W)}║${rst}`;
+
+  logger.info(`\n`);
+  logger.info(`${y}╔${line}╗${rst}`);
+  rows.forEach((text) => logger.info(text === "" ? empty : row(text)));
+  logger.info(`${y}╚${line}╝${rst}`);
+  logger.info(`\n`);
 }
