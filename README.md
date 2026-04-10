@@ -1,4 +1,4 @@
-# App Blueprint
+# Medusa store starter
 
 ## Development
 
