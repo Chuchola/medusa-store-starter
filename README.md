@@ -20,6 +20,11 @@
 
 4. Copy the publishable API key from the Medusa admin console and paste it into `storefront/.env.local` as `NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY`.
 
+5. Start the development server
+   ```bash
+   yarn dev
+   ```
+
 ## Deploy to Production or Staging
 
 1. Rename env templates in `deploy/prod_envs` (or `deploy/stage_envs`) by removing the `template` prefix and fill in the required parameters: VPS host, domain names, database/Redis passwords, SSH key path, etc.
