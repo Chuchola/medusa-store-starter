@@ -2,6 +2,11 @@
 
 ## Development
 
+> **⚠️ Important:** Make sure to activate Corepack before starting development:
+> ```bash
+> corepack enable
+> ```
+
 1. Clone the project
    ```bash
    git clone git@github.com:Chuchola/medusa-store-starter.git some_store
@@ -20,7 +25,12 @@
 
 4. Copy the publishable API key from the Medusa admin console and paste it into `storefront/.env.local` as `NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY`.
 
-5. Start the development server
+5. Create an admin user
+   ```bash
+   yarn medusa exec ./src/scripts/create-admin-user.ts <email> <password>
+   ```
+
+6. Start the development server
    ```bash
    yarn dev
    ```
@@ -50,10 +60,10 @@
 
 5. Create an admin user on the remote server — runs the `create-admin-user` script with the specified credentials.
    ```bash
-   ./deploy/run-script.sh prod create-admin-user --email admin@example.com --password <password>
+   ./deploy/run-script.sh <prod | stage> create-admin-user <email> <password>
    ```
 
 6. Deploy the Next.js storefront — verifies Medusa API availability, builds the storefront in Docker (standalone output), packages and uploads the artifact to VPS, generates PM2 config, and starts the `storefront` process on port 8000.
    ```bash
-   ./deploy/deploy-storefront.sh prod
+   ./deploy/deploy-storefront.sh <prod | stage>
    ```
