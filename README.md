@@ -23,7 +23,7 @@
    yarn configure
    ```
 
-4. Copy the publishable API key from the Medusa admin console and paste it into `storefront/.env.local` as `NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY`.
+4. Copy the publishable API key from the console and paste it into `storefront/.env.local` as `NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY`.
 
 5. Create an admin user
    ```bash
